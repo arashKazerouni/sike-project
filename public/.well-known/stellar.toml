@@ -1,0 +1,15 @@
+ACCOUNTS=[
+"GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
+]
+
+[DOCUMENTATION]
+ORG_NAME="SIKE"
+ORG_URL="https://sike-project.vercel.app"
+
+[[CURRENCIES]]
+code="SIKE"
+issuer="GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
+display_decimals=7
+name="SIKE"
+desc="SIKE is a community-driven digital token built on the Stellar network, combining playful rebellion, creativity, and decentralized community culture."
+image="https://sike-project.vercel.app/logo.png"
