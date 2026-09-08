@@ -23,7 +23,7 @@ const links = [
 const mobileLinks = [
   { href: "/forge", label: "Directives", icon: Hexagon },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/proof", label: "Proof", icon: Radio },
+  { href: "/ecosystem", label: "Ecosystem", icon: Radio },
   { href: "/profile", label: "Profile", icon: UserRound },
 ];
 
