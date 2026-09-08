@@ -20,7 +20,7 @@ desc="SIKE is a Stellar-based community token focused on building an engaging di
 conditions="SIKE is a Stellar network asset issued by the account identified by the issuer public key above. SIKE does not represent ownership of Stellar, Vercel, or any third-party organization. SIKE does not guarantee returns, profits, dividends, or financial benefits. Token utility, distribution mechanisms, ecosystem features, liquidity, and future applications depend on the technical development and adoption of the SIKE ecosystem. Users should independently evaluate the risks associated with digital assets before interacting with SIKE."
 
 image="https://sike-project.vercel.app/logo.png"
-fixed_number=922337203685
+fixed_number=901000000
 is_asset_anchored=false
 display_decimals=7
 status="live"
