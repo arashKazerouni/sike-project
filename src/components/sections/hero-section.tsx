@@ -1,0 +1,59 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, Compass } from "lucide-react";
+import { CyberButton } from "@/components/cyber-button";
+import { GuardianHero } from "@/components/guardian-hero";
+
+export function HeroSection() {
+  return (
+    <section className="relative overflow-hidden border-b border-border bg-grid">
+      <div className="pointer-events-none absolute inset-0 bg-noise" />
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-5 py-20 md:px-8 md:py-28 lg:flex-row lg:items-center lg:gap-8 lg:py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col items-start gap-6 lg:w-1/2"
+        >
+          <div className="clip-chamfer-sm inline-flex items-center gap-2 border border-cyan/30 bg-cyan/5 px-3 py-1.5">
+            <span className="size-1.5 rounded-full bg-cyan-strong shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+            <span className="font-mono text-[10px] tracking-[0.14em] text-cyan-strong uppercase">
+              PROTOCOL EPOCH 04 ACTIVE // 1.2M TASKS VERIFIED
+            </span>
+          </div>
+
+          <h1 className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-balance text-foreground sm:text-5xl lg:text-[3.4rem]">
+            YOUR ACTIONS CREATE VALUE.
+            <br />
+            <span className="text-cyan-strong text-glow-cyan">YOUR VALUE BUILDS OWNERSHIP.</span>
+          </h1>
+
+          <p className="max-w-lg text-pretty text-base leading-relaxed text-text-secondary">
+            SIKE transforms meaningful cognitive, technical, and community output into
+            verified network equity. No passive farming. No hollow clicks. High-impact
+            execution rewarded instantly.
+          </p>
+
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <CyberButton size="lg" icon={<ArrowRight />}>
+              Initialize Protocol
+            </CyberButton>
+            <CyberButton size="lg" variant="ghost" icon={<Compass />}>
+              Explore Missions
+            </CyberButton>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+          className="flex w-full justify-center lg:w-1/2"
+        >
+          <GuardianHero />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
