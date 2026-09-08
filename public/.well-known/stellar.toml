@@ -2,25 +2,23 @@ NETWORK_PASSPHRASE="Public Global Stellar Network ; September 2015"
 
 VERSION="2.0.0"
 
+ACCOUNTS=[
+"GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
+]
+
 [DOCUMENTATION]
 ORG_NAME="SIKE"
 ORG_URL="https://sike-project.vercel.app"
 ORG_LOGO="https://sike-project.vercel.app/logo.png"
-ORG_DESCRIPTION="SIKE is a community-driven digital token built on the Stellar network. Designed around creativity, participation, and decentralized community culture, SIKE aims to create a recognizable ecosystem powered by Stellar technology."
-
-[[PRINCIPALS]]
-name="SIKE Team"
+ORG_DESCRIPTION="SIKE is a community-driven digital token built on the Stellar network."
 
 [[CURRENCIES]]
 code="SIKE"
 issuer="GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
 name="SIKE"
-desc="SIKE is a Stellar-based community token focused on building an engaging digital ecosystem. Inspired by creativity, innovation, and community participation, SIKE represents a decentralized asset created for users within the Stellar ecosystem."
-
-conditions="SIKE is a Stellar network asset issued by the account identified by the issuer public key above. SIKE does not represent ownership of Stellar, Vercel, or any third-party organization. SIKE does not guarantee returns, profits, dividends, or financial benefits. Token utility, distribution mechanisms, ecosystem features, liquidity, and future applications depend on the technical development and adoption of the SIKE ecosystem. Users should independently evaluate the risks associated with digital assets before interacting with SIKE."
+desc="SIKE is a Stellar-based community token."
 
 image="https://sike-project.vercel.app/logo.png"
 fixed_number=901000000
-is_asset_anchored=false
 display_decimals=7
 status="live"
