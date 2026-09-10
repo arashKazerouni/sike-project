@@ -1,14 +1,14 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { SESSION_COOKIE, userIdFromCookie } from "@/lib/local-store";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
-  const id = userIdFromCookie((await cookies()).get(SESSION_COOKIE)?.value);
-  return NextResponse.json({ user: id ? { id } : null });
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+  return NextResponse.json({ user: data.user ? { id: data.user.id, email: data.user.email } : null });
 }
 
 export async function DELETE() {
-  const response = NextResponse.json({ ok: true });
-  response.cookies.delete(SESSION_COOKIE);
-  return response;
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  return NextResponse.json({ ok: true });
 }
