@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
-import { authenticate, SESSION_COOKIE, sessionCookie } from "@/lib/local-store";
-
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: "lax" as const,
-  secure: process.env.NODE_ENV === "production",
-  maxAge: 60 * 60 * 24 * 30,
-  path: "/",
-};
+import { createClient } from "@/lib/supabase/server";
+import { normalizeEmail } from "@/lib/supabase/auth";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -22,17 +15,21 @@ export async function POST(request: Request) {
   }
 
   const input = body as Record<string, unknown>;
-  const email = String(input.email ?? "").trim().toLowerCase();
+  const email = normalizeEmail(input.email);
   const password = String(input.password ?? "");
 
   if (!email || !password || password.length > 256) {
     return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
   }
 
-  const user = await authenticate(email, password);
-  if (!user) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  const response = NextResponse.json({ user });
-  response.cookies.set(SESSION_COOKIE, sessionCookie(user.id), cookieOptions);
-  return response;
+  if (error || !data.user) {
+    return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
+  }
+
+  return NextResponse.json({
+    user: { id: data.user.id, email: data.user.email },
+  });
 }
