@@ -1,3 +1,22 @@
 import { NextResponse } from "next/server";
-import { authenticate, SESSION_COOKIE, sessionCookie } from "@/lib/local-store";
-export async function POST(request: Request) { const { email, password } = await request.json(); const user = await authenticate(String(email ?? "").trim().toLowerCase(), String(password ?? "")); if (!user) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 }); const response = NextResponse.json({ user }); response.cookies.set(SESSION_COOKIE, sessionCookie(user.id), { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 30, path: "/" }); return response; }
+import { createClient } from "@/lib/supabase/server";
+
+export async function POST(request: Request) {
+  try {
+    const { email, password } = await request.json();
+    const normalizedEmail = String(email ?? "").trim().toLowerCase();
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: normalizedEmail,
+      password: String(password ?? ""),
+    });
+
+    if (error) {
+      return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
+    }
+
+    return NextResponse.json({ user: data.user, session: data.session });
+  } catch {
+    return NextResponse.json({ error: "Unable to connect your identity." }, { status: 400 });
+  }
+}
