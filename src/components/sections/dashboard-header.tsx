@@ -2,9 +2,19 @@
 
 import { motion } from "framer-motion";
 import { GuardianAvatar } from "@/components/guardian-avatar";
-import { ProgressBar } from "@/components/progress-bar";
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  displayName: string;
+  userId: string;
+  stellarAddress: string | null;
+  verifiedTasks: number;
+}
+
+function shorten(value: string) {
+  return `${value.slice(0, 8)}…${value.slice(-6)}`;
+}
+
+export function DashboardHeader({ displayName, userId, stellarAddress, verifiedTasks }: DashboardHeaderProps) {
   return (
     <div className="clip-chamfer relative overflow-hidden border border-border bg-surface/80 p-6 md:p-8">
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
@@ -13,13 +23,13 @@ export function DashboardHeader() {
           <GuardianAvatar size="lg" active />
           <div className="flex flex-col gap-1.5">
             <span className="font-mono text-[10px] tracking-[0.14em] text-text-muted uppercase">
-              OPERATOR ID · 0x4F9A
+              OPERATOR ID · {shorten(userId)}
             </span>
             <h1 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Welcome back, Operator
+              Welcome back, {displayName}
             </h1>
             <span className="font-mono text-xs tracking-[0.06em] text-cyan-strong uppercase">
-              Reputation Rank: Journeyman
+              {stellarAddress ? `Stellar · ${shorten(stellarAddress)}` : "Stellar wallet not connected"}
             </span>
           </div>
         </div>
@@ -31,10 +41,12 @@ export function DashboardHeader() {
           className="flex w-full flex-col gap-2 sm:w-64"
         >
           <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.1em] text-text-muted uppercase">
-            <span>Progress to Master</span>
-            <span className="text-cyan-strong">72%</span>
+            <span>Verified Tasks</span>
+            <span className="text-cyan-strong">{verifiedTasks}</span>
           </div>
-          <ProgressBar value={72} accent="cyan" showSegments />
+          <div className="h-1 overflow-hidden rounded-full bg-background">
+            <div className="h-full w-full bg-cyan-strong/60" />
+          </div>
         </motion.div>
       </div>
     </div>
