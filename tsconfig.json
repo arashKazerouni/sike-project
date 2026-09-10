@@ -14,8 +14,9 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["./components/*", "./src/components/*"],
-      "@/lib/*": ["./lib/*"]
+      "@/components/*": ["./src/components/*", "./components/*"],
+      "@/lib/supabase/*": ["./src/lib/supabase/*", "./lib/supabase/*"],
+      "@/lib/*": ["./src/lib/*", "./lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
