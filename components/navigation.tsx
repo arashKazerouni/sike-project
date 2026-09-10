@@ -8,8 +8,10 @@ import {
   Radio,
   UserRound,
   Menu,
+  LogOut,
+  Trophy,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { CyberButton } from "@/components/cyber-button";
@@ -33,6 +35,8 @@ export function Navigation() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -48,15 +52,26 @@ export function Navigation() {
     return () => listener.subscription.unsubscribe();
   }, []);
 
-  const authAction = () => {
-    if (isAuthenticated) {
-      router.push("/forge");
-    } else {
-      router.push("/auth");
+  useEffect(() => {
+    function handlePointerDown(event: MouseEvent) {
+      if (accountRef.current && !accountRef.current.contains(event.target as Node)) {
+        setAccountOpen(false);
+      }
     }
-  };
 
-  const authLabel = isAuthenticated ? "Start Earning" : "Connect Identity";
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, []);
+
+  async function logout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setIsAuthenticated(false);
+    setAccountOpen(false);
+    setOpen(false);
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <>
@@ -93,10 +108,51 @@ export function Navigation() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <CyberButton size="sm" onClick={authAction}>
-              {authLabel}
-            </CyberButton>
+          <div className="relative hidden items-center gap-3 lg:flex" ref={accountRef}>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex h-8 items-center gap-2 border border-cyan/30 bg-cyan/5 px-3.5 font-mono text-[10px] font-semibold tracking-[0.1em] text-cyan-strong uppercase transition-colors hover:border-cyan/60 hover:bg-cyan/10"
+                >
+                  <Trophy className="size-3.5" />
+                  My Rewards
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setAccountOpen((value) => !value)}
+                  className="flex size-8 items-center justify-center rounded-sm border border-border bg-surface text-text-secondary transition-colors hover:border-cyan/40 hover:text-cyan-strong"
+                  aria-label="Open account menu"
+                  aria-expanded={accountOpen}
+                >
+                  <UserRound className="size-4" />
+                </button>
+                {accountOpen ? (
+                  <div className="absolute right-0 top-11 w-44 border border-border bg-surface p-1.5 shadow-2xl">
+                    <Link
+                      href="/profile"
+                      onClick={() => setAccountOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2.5 font-mono text-[10px] tracking-[0.1em] text-text-secondary uppercase hover:bg-surface-2 hover:text-cyan-strong"
+                    >
+                      <UserRound className="size-3.5" />
+                      Profile
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="flex w-full items-center gap-2 px-3 py-2.5 font-mono text-[10px] tracking-[0.1em] text-text-secondary uppercase hover:bg-surface-2 hover:text-cyan-strong"
+                    >
+                      <LogOut className="size-3.5" />
+                      Logout
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <CyberButton size="sm" onClick={() => router.push("/auth")}>
+                Connect Identity
+              </CyberButton>
+            )}
           </div>
 
           <button
@@ -120,14 +176,42 @@ export function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <CyberButton size="sm" className="mt-2" onClick={authAction}>
-              {authLabel}
-            </CyberButton>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  onClick={() => setOpen(false)}
+                  className="mt-2 flex items-center gap-2 rounded-sm border border-cyan/30 bg-cyan/5 px-3 py-2.5 font-mono text-xs font-semibold tracking-[0.1em] text-cyan-strong uppercase"
+                >
+                  <Trophy className="size-4" />
+                  My Rewards
+                </Link>
+                <Link
+                  href="/profile"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 rounded-sm px-3 py-2.5 font-mono text-xs tracking-[0.1em] text-text-secondary uppercase hover:bg-surface-2 hover:text-cyan-strong"
+                >
+                  <UserRound className="size-4" />
+                  Profile
+                </Link>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="flex items-center gap-2 rounded-sm px-3 py-2.5 font-mono text-xs tracking-[0.1em] text-text-secondary uppercase hover:bg-surface-2 hover:text-cyan-strong"
+                >
+                  <LogOut className="size-4" />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <CyberButton size="sm" className="mt-2" onClick={() => { setOpen(false); router.push("/auth"); }}>
+                Connect Identity
+              </CyberButton>
+            )}
           </div>
         ) : null}
       </header>
 
-      {/* Mobile bottom dock */}
       <nav className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border bg-surface/95 px-2 py-2 backdrop-blur-md md:hidden">
         {mobileLinks.map((link) => {
           const Icon = link.icon;
