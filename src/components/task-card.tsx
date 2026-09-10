@@ -2,7 +2,7 @@
 
 import { useRef, useState, type MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { Clock, Zap } from "lucide-react";
+import { Clock, Heart, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Directive } from "@/lib/types";
 import { CyberButton } from "@/components/cyber-button";
@@ -27,6 +27,12 @@ interface TaskCardProps {
 export function TaskCard({ directive }: TaskCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 50, y: 50 });
+  const [likeState, setLikeState] = useState({ liked: false, count: 0 });
+
+  async function handleLike() {
+    const response = await fetch(`/api/missions/${directive.id}/like`, { method: "POST" });
+    if (response.ok) setLikeState(await response.json());
+  }
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
     const rect = ref.current?.getBoundingClientRect();
@@ -115,6 +121,10 @@ export function TaskCard({ directive }: TaskCardProps) {
       </div>
 
       <div className="relative flex items-center gap-2">
+        <button type="button" onClick={handleLike} className="inline-flex h-8 items-center gap-1.5 border border-border px-2.5 font-mono text-xs text-text-secondary transition-colors hover:border-cyan/40 hover:text-cyan-strong" aria-label={`Like ${directive.title}`}>
+          <Heart className={cn("size-3.5", likeState.liked && "fill-current text-cyan-strong")} />
+          {likeState.count > 0 ? likeState.count : "Like"}
+        </button>
         <CyberButton variant="ghost" size="sm" className="flex-1">
           Review Specs
         </CyberButton>

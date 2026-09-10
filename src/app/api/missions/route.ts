@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { allMissions } from "@/lib/local-store";
+export async function GET(request: Request) { const url = new URL(request.url); const tier = url.searchParams.get("tier") ?? "All"; const query = (url.searchParams.get("q") ?? "").toLowerCase(); const page = Math.max(1, Number(url.searchParams.get("page") ?? 1)); const filtered = allMissions.filter((mission) => (tier === "All" || mission.difficulty === tier) && (!query || `${mission.title} ${mission.skillVector} ${mission.impact}`.toLowerCase().includes(query))); const pageSize = 24; return NextResponse.json({ missions: filtered.slice((page - 1) * pageSize, page * pageSize), total: filtered.length, pageSize }); }

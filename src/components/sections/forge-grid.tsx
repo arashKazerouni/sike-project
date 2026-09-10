@@ -3,14 +3,14 @@
 import { useMemo, useState } from "react";
 import { ForgeFilters } from "@/components/sections/forge-filters";
 import { TaskCard } from "@/components/task-card";
-import { directives } from "@/lib/data";
+import { missionCatalog } from "@/lib/data";
 import type { DifficultyTier } from "@/lib/types";
 
 export function ForgeGrid() {
   const [tier, setTier] = useState<DifficultyTier | "All">("All");
 
   const filtered = useMemo(
-    () => (tier === "All" ? directives : directives.filter((d) => d.difficulty === tier)),
+    () => (tier === "All" ? missionCatalog : missionCatalog.filter((d) => d.difficulty === tier)),
     [tier],
   );
 

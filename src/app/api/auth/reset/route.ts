@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { createResetToken, resetPassword } from "@/lib/local-store";
+export async function POST(request: Request) { const body = await request.json(); if (body.token) { const ok = await resetPassword(String(body.token), String(body.password ?? "")); return NextResponse.json(ok ? { message: "Password updated." } : { error: "This reset link is invalid or expired." }, { status: ok ? 200 : 400 }); } const email = String(body.email ?? "").trim().toLowerCase(); const token = await createResetToken(email); return NextResponse.json({ message: token ? `Demo reset link: /auth/reset?token=${token}` : "If that account exists, a reset link has been created." }); }

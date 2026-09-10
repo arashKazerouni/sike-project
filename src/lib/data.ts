@@ -69,6 +69,21 @@ export const directives: Directive[] = [
   },
 ];
 
+const missionVectors = ["Machine Learning QA", "Linguistic Validation", "Security Auditing", "Community Synthesis", "Data Engineering", "Governance"];
+const missionTiers = ["Recon", "Standard", "Advanced", "Apex"] as const;
+export const missionCatalog: Directive[] = Array.from({ length: 240 }, (_, index) => {
+  const base = directives[index % directives.length];
+  return {
+    ...base,
+    id: `SIKE-${String(index + 1).padStart(4, "0")}`,
+    skillVector: missionVectors[index % missionVectors.length],
+    difficulty: missionTiers[index % missionTiers.length],
+    title: `${base.title} // Node ${String(index + 1).padStart(3, "0")}`,
+    reward: 25 + ((index * 37) % 480),
+    priority: index % 5 === 0 ? "Critical" : base.priority,
+  };
+});
+
 export const reputationVectors: ReputationVector[] = [
   { skill: "Data Engineering", value: 92 },
   { skill: "Linguistic Validation", value: 78 },

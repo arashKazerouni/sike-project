@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { authenticate, SESSION_COOKIE, sessionCookie } from "@/lib/local-store";
+export async function POST(request: Request) { const { email, password } = await request.json(); const user = await authenticate(String(email ?? "").trim().toLowerCase(), String(password ?? "")); if (!user) return NextResponse.json({ error: "Invalid email or password." }, { status: 401 }); const response = NextResponse.json({ user }); response.cookies.set(SESSION_COOKIE, sessionCookie(user.id), { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 30, path: "/" }); return response; }
