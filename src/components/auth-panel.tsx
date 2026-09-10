@@ -29,19 +29,19 @@ export function AuthPanel() {
 
       if (!response.ok) {
         setMessage(data.error ?? "Unable to complete the request.");
+        setBusy(false);
         return;
       }
 
-      const success = Boolean(data.user || data.session || data.message);
-      setMessage(success ? "Identity ready." : "Identity ready.");
-
-      if (success && (mode === "login" || mode === "register")) {
-        router.push("/dashboard");
-        router.refresh();
+      if (mode === "login" || mode === "register") {
+        window.location.replace("/dashboard");
+        return;
       }
+
+      setMessage("Identity ready.");
+      setBusy(false);
     } catch {
       setMessage("Unable to complete the request.");
-    } finally {
       setBusy(false);
     }
   }
