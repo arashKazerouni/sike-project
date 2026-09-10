@@ -67,7 +67,9 @@ export function Navigation() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <CyberButton size="sm">Connect Identity</CyberButton>
+            <CyberButton size="sm" asChild>
+              <Link href="/auth">Connect Identity</Link>
+            </CyberButton>
           </div>
 
           <button
@@ -91,8 +93,10 @@ export function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <CyberButton size="sm" className="mt-2">
-              Connect Identity
+            <CyberButton size="sm" asChild className="mt-2">
+              <Link href="/auth" onClick={() => setOpen(false)}>
+                Connect Identity
+              </Link>
             </CyberButton>
           </div>
         ) : null}
