@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { CyberButton } from "@/components/cyber-button";
 
 type Mode = "login" | "register" | "reset";
 export function AuthPanel() {
+  const router = useRouter();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +24,25 @@ export function AuthPanel() {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      setMessage(data.error ?? data.message ?? "Identity ready.");
-      if (response.ok && mode === "register" && data.requiresEmailConfirmation) {
+
+      if (!response.ok) {
+        setMessage(data.error ?? "Unable to complete the request.");
+        return;
+      }
+
+      if (mode === "login") {
+        router.push("/dashboard");
+        router.refresh();
+        return;
+      }
+
+      if (mode === "register" && data.requiresEmailConfirmation) {
         setMessage("Account created. Check your email to confirm your identity before signing in.");
+      } else if (mode === "register") {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setMessage(data.message ?? "Identity ready.");
       }
     } catch {
       setMessage("Unable to reach the identity service. Please try again.");
