@@ -12,13 +12,13 @@ HOME_DOMAIN="sike-project.vercel.app"
 ORG_NAME="SIKE"
 ORG_URL="https://sike-project.vercel.app"
 ORG_LOGO="https://sike-project.vercel.app/logo_sec.png"
-ORG_DESCRIPTION="SIKE is a community-driven digital token built on the Stellar network."
+ORG_DESCRIPTION="SIKE is a Stellar-based utility reward token that distributes value through meaningful user tasks and contributions."
 
 [[CURRENCIES]]
 code="SIKE"
 issuer="GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
 name="SIKE"
-desc="SIKE is a Stellar-based community token."
+desc="SIKE is a Stellar-based utility reward token that distributes value through meaningful user tasks and contributions."
 image="https://sike-project.vercel.app/logo_sec.png"
 home_domain="sike-project.vercel.app"
 fixed_number=901000000
