@@ -12,15 +12,26 @@ HOME_DOMAIN="sike-project.vercel.app"
 ORG_NAME="SIKE"
 ORG_URL="https://sike-project.vercel.app"
 ORG_LOGO="https://sike-project.vercel.app/logo_sec.png"
+<<<<<<< HEAD
 ORG_DESCRIPTION="SIKE is a community-driven digital token built on the Stellar network."
+=======
+ORG_DESCRIPTION="SIKE is a Stellar-based utility reward ecosystem where users earn tokens by completing meaningful tasks and contributing value."
+>>>>>>> 0bea3aa (toml updated)
 
 [[CURRENCIES]]
 code="SIKE"
 issuer="GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
+status="live"
 name="SIKE"
+<<<<<<< HEAD
 desc="SIKE is a Stellar-based community token."
 image="https://sike-project.vercel.app/logo_sec.png"
 home_domain="sike-project.vercel.app"
 fixed_number=901000000
 display_decimals=7
 status="live"
+=======
+desc="SIKE is a utility reward token powering a task-based ecosystem built on the Stellar network."
+image="https://sike-project.vercel.app/logo_sec.png"
+display_decimals=7
+>>>>>>> 0bea3aa (toml updated)
