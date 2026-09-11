@@ -1,6 +1,6 @@
-VERSION="2.0.0"
-
 NETWORK_PASSPHRASE="Public Global Stellar Network ; September 2015"
+
+VERSION="2.0.0"
 
 ACCOUNTS=[
 "GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
@@ -12,15 +12,15 @@ HOME_DOMAIN="sike-project.vercel.app"
 ORG_NAME="SIKE"
 ORG_URL="https://sike-project.vercel.app"
 ORG_LOGO="https://sike-project.vercel.app/logo_sec.png"
-ORG_DESCRIPTION="SIKE is a Stellar-based utility reward ecosystem where users earn tokens by completing meaningful tasks."
+ORG_DESCRIPTION="SIKE is a Stellar-based utility reward ecosystem where users earn tokens by completing meaningful tasks and contributing value."
 
 [[CURRENCIES]]
 code="SIKE"
 issuer="GBPBUOS7DG7IOK3CCX3TPVLG4PW44C7J5M4VEXREYSM7EOQAGEYPY7QV"
-name="SIKE"
-desc="Utility reward token powering the SIKE task-based contribution ecosystem."
-image="https://sike-project.vercel.app/logo_sec.png"
-is_asset_anchored=false
-fixed_number=10000000000
-display_decimals=7
 status="live"
+name="SIKE"
+desc="SIKE is a utility reward token powering a task-based ecosystem built on the Stellar network."
+image="https://sike-project.vercel.app/logo_sec.png"
+home_domain="sike-project.vercel.app"
+display_decimals=7
+max_number=10000000000
